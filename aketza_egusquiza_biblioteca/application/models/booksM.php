@@ -12,9 +12,9 @@ class BooksM extends CI_Model
         $this->db->select('genero');
         $this->db->from('libros');
         $this->db->distinct();        
-        $res = $this->db->get();
+        $query = $this->db->get();
 
-        foreach ($res->result() as $row)
+        foreach ($query->result() as $row)
         {
             $categories[] = $row->genero;
         }
@@ -34,9 +34,9 @@ class BooksM extends CI_Model
         $this->db->from('libros');
         $this->db->join('autores','autores.idautor=libros.idautor');
         $this->db->where('genero',$genre);
-        $res = $this->db->get();
+        $query = $this->db->get();
 
-        foreach ($res->result() as $row)
+        foreach ($query->result() as $row)
         {
             $books[] = [
                 'id' => $row->idlibro,
@@ -49,12 +49,16 @@ class BooksM extends CI_Model
     }
 
     /**
-     * get lends of the book
+     * get lend number of the book
      * @param number $book book id
-     * @return array assoc array of lend book info
+     * @return number number of lend book info
      */
     function getBookLends( $book ) {
-
+        $this->db->select('idprestamo');
+        $this->db->from('prestamos');
+        $this->db->where('idlibro',$book);
+        $this->db->get();
+        return $this->db->affected_rows();
     }
 
     /**
@@ -63,6 +67,31 @@ class BooksM extends CI_Model
      */
     function lendBook( $book ) {
 
+        $params = [
+            "fecha" =>  date('Y-m-d'),
+            "idlibro" => $book
+        ];
+
+        $this->db->insert('prestamos',$params);
+        return $this->db->affected_rows() >= 1;
+    }
+
+    /**
+     * Get book name
+     * @param $book The book id
+     */
+    function getBookName( $book ) {
+        $this->db->select('titulo');
+        $this->db->from('libros');
+        $this->db->where('idlibro',$book);
+
+        $query = $this->db->get();
+        $result = $query->result();
+        
+        if(is_array($result) and $result[0]) 
+            return $result[0]->titulo;
+        else 
+            return false;
     }
 
 }
