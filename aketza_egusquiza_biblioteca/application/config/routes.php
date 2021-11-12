@@ -55,3 +55,4 @@ $route['translate_uri_dashes'] = FALSE;
 
 $route['genre/(:any)'] = 'mainc/genre/$1';
 $route['lends'] = 'lendsc';
+$route['lends/book/(:any)'] = 'lendsc/book/$1';

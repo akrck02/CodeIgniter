@@ -112,7 +112,7 @@ class BooksM extends CI_Model
     }
 
     function getLends(){
-        $this->db->select('libros.titulo');
+        $this->db->select('libros.titulo,libros.idlibro');
         $this->db->from('prestamos');
         $this->db->join('libros','libros.idlibro=prestamos.idlibro');
         $this->db->distinct();
@@ -122,7 +122,27 @@ class BooksM extends CI_Model
         $result = $query->result();
 
         foreach($result as $row){
-            $lends[] = $row->titulo;
+            $lends[$row->idlibro] = $row->titulo;
+        }
+
+        return $lends;
+    }
+
+    function getLendInfo( $book ){
+        $this->db->select('idprestamo,idlibro,fecha');
+        $this->db->from('prestamos');
+        $this->db->where('idlibro', $book);
+        $this->db->distinct();
+
+        $lends = [];
+        $query = $this->db->get();
+        $result = $query->result();
+
+        foreach($result as $row){
+            $lends[] = [
+                "id" => $row->idprestamo,
+                "fecha" => $row->fecha
+            ];
         }
 
         return $lends;

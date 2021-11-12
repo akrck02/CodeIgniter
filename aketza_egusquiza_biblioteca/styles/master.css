@@ -166,7 +166,15 @@ td {
     padding: 10px;
 }
 
-.roundBlack{
+input[type='submit']{
+    background: #f1f1f1;
+    border-radius: 3px;
+    border: 1px solid #c1c1c1;
+    padding: 5px;
+    cursor: pointer;
+}
+
+input[type='submit'].roundBlack{
     border-radius: 100rem;
     background: #333;
     color: #ffffff;
@@ -177,7 +185,7 @@ td {
     border: none;
 }
 
-.roundBlack:hover{
+input[type='submit'].roundBlack:hover{
     background: #444;
     box-shadow: 0px 0px 2px rgba(0,0,0,.15);
 }
