@@ -94,5 +94,38 @@ class BooksM extends CI_Model
             return false;
     }
 
+    function getLendsByDate( $date ){
+        $this->db->select('libros.titulo');
+        $this->db->from('prestamos');
+        $this->db->join('libros','libros.idlibro=prestamos.idlibro');
+        $this->db->where('fecha', $date);
+
+        $lends = [];
+        $query = $this->db->get();
+        $result = $query->result();
+
+        foreach($result as $row){
+            $lends[] = $row->titulo;
+        }
+
+        return $lends;
+    }
+
+    function getLends(){
+        $this->db->select('libros.titulo');
+        $this->db->from('prestamos');
+        $this->db->join('libros','libros.idlibro=prestamos.idlibro');
+        $this->db->distinct();
+
+        $lends = [];
+        $query = $this->db->get();
+        $result = $query->result();
+
+        foreach($result as $row){
+            $lends[] = $row->titulo;
+        }
+
+        return $lends;
+    }
 }
 ?>

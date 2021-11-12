@@ -1,11 +1,7 @@
-/*
-To change this license header, choose License Headers in Project Properties.
-To change this template file, choose Tools | Templates
-and open the template in the editor.
-*/
 /* 
     Created on : 20-oct-2021, 14:40:06
     Author     : Akaitz
+    Edited by  : Akrck02
 */
 
 body {
@@ -20,6 +16,8 @@ body {
     position: absolute;
     width: 100%;
     height:100%;
+    
+    transition: .5s;
 }
 
 #header {
@@ -33,9 +31,12 @@ body {
     justify-content: center;
     align-items: center;
     background: #333;
+    opacity: 0;
+    transition: .5s;
     padding-top: 8px;
 }
 #header h1 {
+    position: relative;
     font-size: 30px;
     text-transform: uppercase;
     letter-spacing: 0.3em;
@@ -43,17 +44,24 @@ body {
 }
 
 #menu {
+    display: flex;
+    justify-content: center;
+    text-align: center;
     font-family: "trebuchet ms", verdana, sans-serif;
     font-size: 14px;
     font-weight: bold;
-    position: absolute;
-    height: 27px;
-    top: 60px;
+    position: relative;
+    height: 30px;
     left: 0px;
     width: 100%;
     padding: 0px;
-    color: #000000;
-    background-color: #eee
+    color: #202020;
+    background-color: #eee;
+    opacity: 0;
+}
+
+#menu a {
+    margin: 0px 5px;
 }
 
 li{
@@ -90,7 +98,7 @@ a:hover, a:active {
     margin: 0 auto 0 auto;
     text-align: left;
     width: 100%;
-    height: calc(100% - 70px);
+    height: calc(100% - 100px);
 }
 
 #bar {
@@ -99,7 +107,8 @@ a:hover, a:active {
     width: 200px;
     background: #eee;
     padding: 10px;
-    margin-right: 30px;
+    opacity: 0;
+    transition: .5s;
     height: calc(100% - 20px);
 }
 
@@ -114,6 +123,8 @@ img {
 }
 
 #main {
+    transition: .5s;
+    opacity: 0;
     position: relative;
     margin: 0px 15px 15px 240px;
     padding: 15px 15px 15px 15px;
@@ -169,4 +180,9 @@ td {
 .roundBlack:hover{
     background: #444;
     box-shadow: 0px 0px 2px rgba(0,0,0,.15);
+}
+select {
+    padding: 5px;
+    border: 2px solid #c5c5c5;
+    border-radius: 3px;
 }

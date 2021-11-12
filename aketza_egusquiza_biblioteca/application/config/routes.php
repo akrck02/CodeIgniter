@@ -52,3 +52,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 $route['default_controller'] = 'mainC';
 $route['404_override'] = '';
 $route['translate_uri_dashes'] = FALSE;
+
+$route['genre/(:any)'] = 'mainc/genre/$1';
+$route['lends'] = 'lendsc';

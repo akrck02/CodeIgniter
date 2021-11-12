@@ -1,5 +1,6 @@
 <?php
     defined('BASEPATH') OR exit('No direct script access allowed');
+    if(is_array($books) and count($books)){
 ?>
 
 <form action="<?php base_url()?>" method="post">
@@ -12,6 +13,7 @@
     </tr>
     <?php
         if(is_array($books) and count($books)){
+            
             foreach ($books as $book) {
                 echo "<tr>"; 
                 echo "<td><input type='checkbox' name='book[]' value='".$book['id']."'></td>";
@@ -25,3 +27,5 @@
     ?>
 </table>
 </form>
+
+<?php }?>
