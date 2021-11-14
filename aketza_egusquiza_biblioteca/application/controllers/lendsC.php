@@ -22,13 +22,18 @@ class LendsC extends CI_Controller
 		$lends = $this->booksM->getAllLends();
 		
 		$this->load->view('headerV', ["genres" => $this->genres]);
-		$this->load->view('lendBooksV',["lends" => $lends]);
+		
 
 		if(isset($_POST['books'])){
 			$lendsInfo = $this->booksM->getLendInfo($_POST['books']);
+			$this->load->view('lendBooksV',[
+				"lends" => $lends,
+				"book" => $_POST['books'],
+			]);
 			$this->load->view('lendLinksV.php',["lends" => $lendsInfo]);
+		} else {
+			$this->load->view('lendBooksV',["lends" => $lends]);
 		}
-
 		$this->load->view('footerV');
 	}
 
