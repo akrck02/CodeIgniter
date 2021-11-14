@@ -54,5 +54,9 @@ $route['404_override'] = '';
 $route['translate_uri_dashes'] = FALSE;
 
 $route['genre/(:any)'] = 'mainc/genre/$1';
+
+$route['calendar'] = 'mainc/calendar/';
+$route['calendar/(:any)'] = 'mainc/calendar/$1';
+
 $route['lends'] = 'lendsc';
 $route['lends/book/(:any)'] = 'lendsc/book/$1';

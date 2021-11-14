@@ -15,9 +15,7 @@ class MainC extends CI_Controller
 	 */
 	public function index()
 	{
-		$genres = $this->booksM->getGenres();
-		$this->load->view('headerV', ["genres" => $genres]);
-		$this->load->view('footerV');
+		$this->genre();
 	}
 
 	/**
@@ -25,18 +23,42 @@ class MainC extends CI_Controller
 	 * @param string $genre The genre to load
 	 * @param string $date The date to load
 	 */
-	public function genre($genre = '', $date = '')
+	public function genre($genre = false)
 	{
 		// Get data from models
 		$genres = $this->booksM->getGenres();
-		$books  = $this->booksM->getBooksByGenre($genre);
+
+		if($genre !== false) $books = $this->booksM->getBooksByGenre($genre);
+		else $books = $this->booksM->getBooksByGenre($genres[0]);
 
 		// Loads view 
 		$this->load->view('headerV', ["genres" => $genres]);
 		$this->load->view('booksV', ["genre" => $genre, "books" => $books]);
-		$this->calendar();
 		$this->lend();
 		$this->load->view('footerV');
+	}
+
+	
+	/**
+	 * draw calendar if date is given
+	 */
+	public function calendar($date = false)
+	{
+
+		// Get data from models
+		$genres = $this->booksM->getGenres();
+
+		// Loads view 
+		$this->load->view('headerV', ["genres" => $genres]);
+
+		if ($date !== false) {
+		
+			$dateBooks = $this->booksM->getLendsByDate($date);
+			$this->load->view('calendarV', [
+				'books' => $dateBooks,
+				'date' => $date
+			]);
+		} else $this->load->view('calendarV', ['books' => []]);
 	}
 
 	/**
@@ -70,19 +92,4 @@ class MainC extends CI_Controller
 
 	}
 
-	/**
-	 * draw calendar if date is given
-	 */
-	private function calendar()
-	{
-		if (isset($_GET['date'])) {
-
-			$date = $_GET['date'];
-			$dateBooks = $this->booksM->getLendsByDate($date);
-			$this->load->view('calendarV', [
-				'books' => $dateBooks,
-				'date' => $date
-			]);
-		} else $this->load->view('calendarV', ['books' => []]);
-	}
 }

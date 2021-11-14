@@ -6,7 +6,7 @@ $maxDay = $dateObj->format('t');
 
 $params = [];
 for ($day = 1; $day <= $maxDay; $day++) {
-    $params[$day] = site_url() . "/genre/$genre?date=" . $dateObj->format('Y') . "-" . $dateObj->format('m') . "-$day";
+    $params[$day] = site_url() . "/calendar/" . $dateObj->format('Y') . "-" . $dateObj->format('m') . "-$day";
 }
 
 echo $this->calendar->generate($dateObj->format('Y'), $dateObj->format('m'), $params);

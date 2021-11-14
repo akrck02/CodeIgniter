@@ -27,6 +27,7 @@
 	</div>
 	<div id="menu">
 		<a href="<?= site_url() ?>">Libros</a>
+		<a href="<?= site_url()."/calendar" ?>">Calendario</a>
 		<a href="<?= site_url()."/lends" ?>">Prestamos</a>
 	</div>
 	<div id="container">
