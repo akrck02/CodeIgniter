@@ -12,7 +12,12 @@
         <th>AUTOR</th>
     </tr>
     <?php
-        if(is_array($books) and count($books)){
+        if($genre !== false)
+            echo "<h1>Libros del género $genre</h1>";
+        else
+            echo "<h1>Todos los libros</h1>";
+
+        if(is_array($books) and count($books) > 0){
             
             foreach ($books as $book) {
                 echo "<tr>"; 

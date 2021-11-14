@@ -27,13 +27,16 @@ class BooksM extends CI_Model
      * @param string $genre genre of the books
      * @return array assoc array of books info
      */
-    function getBooksByGenre( $genre ){
+    function getBooksByGenre( $genre = false ){
         $books = [];
 
         $this->db->select('libros.idlibro, libros.titulo, autores.nombre');
         $this->db->from('libros');
         $this->db->join('autores','autores.idautor=libros.idautor');
-        $this->db->where('genero',$genre);
+       
+        if($genre !== false)
+            $this->db->where('genero',$genre);
+       
         $query = $this->db->get();
 
         foreach ($query->result() as $row)
@@ -94,11 +97,17 @@ class BooksM extends CI_Model
             return false;
     }
 
+    /**
+     * Get all the lends on a date
+     * @param string $date The date to search for
+     * @return array The lends
+     */
     function getLendsByDate( $date ){
         $this->db->select('libros.titulo');
         $this->db->from('prestamos');
         $this->db->join('libros','libros.idlibro=prestamos.idlibro');
         $this->db->where('fecha', $date);
+        $this->db->distinct();
 
         $lends = [];
         $query = $this->db->get();
@@ -111,7 +120,11 @@ class BooksM extends CI_Model
         return $lends;
     }
 
-    function getLends(){
+    /**
+     * Get all the lends
+     * @return array All the lends on database
+     */
+    function getAllLends(){
         $this->db->select('libros.titulo,libros.idlibro');
         $this->db->from('prestamos');
         $this->db->join('libros','libros.idlibro=prestamos.idlibro');
@@ -128,6 +141,11 @@ class BooksM extends CI_Model
         return $lends;
     }
 
+    /**
+     * Get the info of lends of a book
+     * @param number $book The book id
+     * @return array The book lends info
+     */
     function getLendInfo( $book ){
         $this->db->select('idprestamo,idlibro,fecha');
         $this->db->from('prestamos');

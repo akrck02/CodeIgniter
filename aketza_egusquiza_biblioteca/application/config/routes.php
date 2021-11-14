@@ -60,3 +60,4 @@ $route['calendar/(:any)'] = 'mainc/calendar/$1';
 
 $route['lends'] = 'lendsc';
 $route['lends/book/(:any)'] = 'lendsc/book/$1';
+$route['lends/delete/(:any)'] = 'lendsc/delete/$1';

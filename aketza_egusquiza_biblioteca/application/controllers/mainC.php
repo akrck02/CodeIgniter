@@ -4,14 +4,17 @@ defined('BASEPATH') or exit('No direct script access allowed');
 class MainC extends CI_Controller
 {
 
+	private $genres;
+
 	function __construct()
 	{
 		parent::__construct();
 		$this->load->model('booksM');
+		$this->genres = $this->booksM->getGenres();
 	}
 
 	/**
-	 * Default function (Shows header and footer)
+	 * Default function 
 	 */
 	public function index()
 	{
@@ -21,18 +24,14 @@ class MainC extends CI_Controller
 	/**
 	 * Load books of a genre 
 	 * @param string $genre The genre to load
-	 * @param string $date The date to load
 	 */
 	public function genre($genre = false)
 	{
 		// Get data from models
-		$genres = $this->booksM->getGenres();
-
-		if($genre !== false) $books = $this->booksM->getBooksByGenre($genre);
-		else $books = $this->booksM->getBooksByGenre($genres[0]);
+		$books = $this->booksM->getBooksByGenre($genre);
 
 		// Loads view 
-		$this->load->view('headerV', ["genres" => $genres]);
+		$this->load->view('headerV', ["genres" => $this->genres]);
 		$this->load->view('booksV', ["genre" => $genre, "books" => $books]);
 		$this->lend();
 		$this->load->view('footerV');
@@ -44,12 +43,8 @@ class MainC extends CI_Controller
 	 */
 	public function calendar($date = false)
 	{
-
-		// Get data from models
-		$genres = $this->booksM->getGenres();
-
 		// Loads view 
-		$this->load->view('headerV', ["genres" => $genres]);
+		$this->load->view('headerV', ["genres" => $this->genres]);
 
 		if ($date !== false) {
 		
