@@ -10,7 +10,10 @@
         echo form_dropdown("book",$lends,$book);
     else 
         echo form_dropdown("book",$lends);
-        
+
     echo form_submit(["value" => "Ver prestamos"]);
     echo form_close();
+
+    if(isset($counter) and $counter > 0)
+        echo "<p>Se han realizado $counter devoluciones</p>";
 ?>

@@ -11,13 +11,13 @@ class LendsC extends CI_Controller
 		parent::__construct();
 		$this->load->model('booksM');
 		$this->genres = $this->booksM->getGenres();
+		$this->counter = 0;
 	}
 
 	/**
 	 * Default function (Shows header and footer)
 	 */
 	public function index() {
-	
 		$lends = $this->booksM->getAllLends();
 		$this->load->view('headerV', ["genres" => $this->genres]);
 
@@ -26,7 +26,7 @@ class LendsC extends CI_Controller
 			$this->loadLendLinks($lends, $_POST['book']);
 		} 
 		elseif ($this->session->has_userdata('book')) $this->loadLendLinks($lends, $this->session->book);
-		else $this->load->view('lendBooksV',["lends" => $lends]);
+		else $this->load->view('lendBooksV',["lends" => $lends, "counter" => $this->counter]);
 		$this->load->view('footerV');
 	}
 
@@ -53,19 +53,22 @@ class LendsC extends CI_Controller
 				$_SESSION['delete'] = [];
 				$_SESSION['delete'][$id] = $id;
 			}
-
 		
 		// redirect to main page
 		$this->index();
 	}
 
 	public function erase(){
+		$this->counter = 0;
 		if($this->session->has_userdata('delete')) {
 			foreach ($this->session->delete as $id) {
-				$this->booksM->deleteLend($id);
+				if($this->booksM->deleteLend($id))
+					$this->counter++;
 			}
 			$this->session->unset_userdata(['delete','book']);
 		}
+
+		// redirect to main page
 		$this->index();
 	}
 
