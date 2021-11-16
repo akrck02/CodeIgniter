@@ -13,9 +13,13 @@
             echo "<tr>";
             echo "<td>Prestamo Nº ".$lend['id']."</td>";
             echo "<td>".$date->format('Y-m-d')."</td>";
-            echo "<td><a href='".site_url()."/lends/delete/".$lend['id']."'>Devolver</a></td>";
+            echo "<td><a href='".site_url("/lends/delete/".$lend['id'])."'>Devolver</a></td>";
             echo "</tr>"; 
         }
         echo "</table>";
+
+        if($erase)
+            echo "<br><br><a href='".site_url("/lends/erase/")."'> Borrar definitivamente </a>";
+
     }
 ?>

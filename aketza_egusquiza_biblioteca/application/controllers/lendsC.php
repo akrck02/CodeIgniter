@@ -21,22 +21,22 @@ class LendsC extends CI_Controller
 		$lends = $this->booksM->getAllLends();
 		$this->load->view('headerV', ["genres" => $this->genres]);
 
-		if(isset($_POST['books'])) {
-			$this->session->set_userdata(["books" => $_POST["books"]]);
-			$this->loadLendLinks($lends, $_POST['books']);
+		if(isset($_POST['book'])) {
+			$this->session->set_userdata(["book" => $_POST["book"]]);
+			$this->loadLendLinks($lends, $_POST['book']);
 		} 
-		elseif ($this->session->has_userdata('books')) $this->loadLendLinks($lends, $this->session->books);
+		elseif ($this->session->has_userdata('book')) $this->loadLendLinks($lends, $this->session->book);
 		else $this->load->view('lendBooksV',["lends" => $lends]);
 		$this->load->view('footerV');
 	}
 
-	private function loadLendLinks($lends, $books){
-		$lendsInfo = $this->booksM->getLendInfo($books);
+	private function loadLendLinks($lends, $book){
+		$lendsInfo = $this->booksM->getLendInfo($book);
 		$this->load->view('lendBooksV',[
 			"lends" => $lends,
-			"book" => $books,
+			"book" => $book,
 		]);
-		$this->load->view('lendLinksV.php',["lends" => $lendsInfo]);
+		$this->load->view('lendLinksV.php',["lends" => $lendsInfo,"erase" => $this->session->has_userdata('delete')]);
 	}
 
 	/**
@@ -47,9 +47,26 @@ class LendsC extends CI_Controller
 
 		// delete the lend from database
 		if($id !== false) 
-			
-		//$this->booksM->deleteLend($id);
+			if($this->session->has_userdata('delete')) {
+				$_SESSION['delete'][$id] = $id;
+			} else {
+				$_SESSION['delete'] = [];
+				$_SESSION['delete'][$id] = $id;
+			}
+
+		
 		// redirect to main page
 		$this->index();
 	}
+
+	public function erase(){
+		if($this->session->has_userdata('delete')) {
+			foreach ($this->session->delete as $id) {
+				$this->booksM->deleteLend($id);
+			}
+			$this->session->unset_userdata(['delete','book']);
+		}
+		$this->index();
+	}
+
 }
