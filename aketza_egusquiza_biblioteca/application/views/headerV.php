@@ -27,14 +27,14 @@
 	</div>
 	<div id="menu">
 		<a href="<?= site_url() ?>">Libros</a>
-		<a href="<?= site_url()."/calendar" ?>">Calendario</a>
-		<a href="<?= site_url()."/lends" ?>">Prestamos</a>
+		<a href="<?= site_url("/calendar")?>">Calendario</a>
+		<a href="<?= site_url("/lends") ?>">Prestamos</a>
 	</div>
 	<div id="container">
 		<div id="bar">
 			<?php
 				foreach ($genres as $genre) 
-					echo "<li><a href='".site_url()."/genre/$genre'>$genre</a></li>";
+					echo "<li><a href='".site_url("/genre/$genre")."'>$genre</a></li>";
 			?>
 		</div>
 		<div id="main">

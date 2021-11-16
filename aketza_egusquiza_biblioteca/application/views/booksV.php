@@ -3,7 +3,7 @@
     if(is_array($books) and count($books)){
 ?>
 
-<form action="<?php base_url()?>" method="post">
+<?=form_open(site_url("genre/$genre"))?>
 <input type="hidden" name="genre" value='<?=$genre?>'>
 <table>
     <tr>
@@ -21,16 +21,18 @@
             
             foreach ($books as $book) {
                 echo "<tr>"; 
-                echo "<td><input type='checkbox' name='book[]' value='".$book['id']."'></td>";
+                echo "<td>" . form_checkbox( ['name' => 'book[]', 'value' => $book['id']]) . "</td>";
                 echo "<td>".$book['title']."</td>";
                 echo "<td>(".$book['author'].")</td>";
                 echo "</tr>";
             }
-            
-            echo "<tr><td colspan='3'><input class='roundBlack' name='lend' type='submit' value='Prestar libros'></td></tr>";    
+
+            echo "<tr><td colspan='3'>". form_submit(['class' => 'roundBlack', 'name' => 'lend', 'value' => 'Prestar libros']) . "</td></tr>";
         }
     ?>
 </table>
-</form>
 
-<?php }?>
+<?php 
+    echo form_close();
+}
+?>

@@ -165,5 +165,16 @@ class BooksM extends CI_Model
 
         return $lends;
     }
+
+    /**
+     * Delete a lend form database 
+     * @param number $lend the lend to delete
+     * @return boolean if operation was successful
+     */
+    function deleteLend($lend){
+        $this->db->where('idprestamo', $lend);
+        $this->db->delete('prestamos');
+        return $this->db->affected_rows() >= 1;
+    }
 }
 ?>

@@ -2,7 +2,8 @@
     defined('BASEPATH') or exit('No direct script access allowed');
 ?>
 
-<form action="<?= site_url()."/lends" ?>" method="post">
+<form action="<?= site_url("/lends") ?>" method="post">
+<?= form_open(site_url("/lends")); ?>
     <select name="books">
         <?php
             foreach ($lends as $id => $bookName) {
@@ -13,5 +14,7 @@
             }
         ?>
     </select>
-    <input type="submit" value="Ver prestamos">
-</form>
+<?php
+    echo form_submit(["value" => "Ver prestamos"]);
+    echo form_close();
+?>
